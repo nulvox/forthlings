@@ -1,0 +1,12 @@
+# Forthlings Exercises Configuration
+
+[exercises]
+001 = { name = "hello-world", path = "01_basics/hello.fs", difficulty = 1, completed = false }
+002 = { name = "stack-operations", path = "01_basics/stack.fs", difficulty = 1, completed = false }
+003 = { name = "arithmetic", path = "01_basics/arithmetic.fs", difficulty = 1, completed = false }
+
+[progress]
+total-exercises = 3
+completed-count = 0
+last-active = null
+score = 0

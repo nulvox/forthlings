@@ -1,0 +1,123 @@
+#! /usr/bin/gforth
+\ Start of Forthlings CLI application
+
+include exercises/exercises.cfg
+
+variable completed
+0 completed !
+
+: update-progress { completed-count total-exercises -- }
+  completed @ 0= if
+    1 completed !
+    completed-count 1+ to completed-count
+    progress @ completed-count total-exercises
+  then ;
+
+: show-progress { completed-count total-exercises -- }
+  ." Progress: " completed-count . ." / " total-exercises . ." exercises completed" cr cr ;
+
+: welcome-msg
+  ." Welcome to Forthlings!" cr
+  ." An interactive way to learn GNU Forth through exercises." cr cr
+  show-progress
+  ." Available commands:" cr
+  ."   run <exercise>    - Run a specific exercise" cr
+  ."   list             - List all available exercises" cr ;
+
+: list-exercises ( -- )
+  ." Available exercises:" cr
+  10 1 do
+    i s>d <# #s #> pad place
+    ." - Exercise " pad count type cr
+  loop ;
+
+: find-exercise ( c-addr u -- n )
+  10 1 do
+    i s>d <# #s #> 2dup compare 0= if
+      2drop i unloop exit
+    then
+  loop
+  0 ;
+\ Forthlings CLI - Main entry point
+
+include exercises/exercises.cfg
+
+variable completed
+0 completed !
+
+: update-progress { completed-count total-exercises -- }
+  completed @ 0= if
+    1 completed !
+    completed-count 1+ to completed-count
+    progress @ completed-count total-exercises
+  then ;
+
+: show-progress { completed-count total-exercises -- }
+  ." Progress: " completed-count . ." / " total-exercises . ." exercises completed" cr cr ;
+
+: welcome-msg
+  ." Welcome to Forthlings!" cr
+  ." An interactive way to learn GNU Forth through exercises." cr cr
+  show-progress
+  ." Available commands:" cr
+  ."   run <exercise>    - Run a specific exercise" cr
+  ."   list             - List all available exercises" cr ;
+
+: list-exercises ( -- )
+  ." Available exercises:" cr
+  10 1 do
+    i s>d <# #s #> pad place
+    ." - Exercise " pad count type cr
+  loop ;
+
+: find-exercise ( c-addr u -- n )
+  10 1 do
+    i s>d <# #s #> 2dup compare 0= if
+      2drop i unloop exit
+    then
+  loop
+  0 ;
+
+: exercise-path ( n -- c-addr u )
+  s" exercises/01_basics/" pad place
+  >r s" exercise" pad +place
+  r> s>d <# #s #> pad +place
+  s" .fs" pad +place
+  pad count ;
+
+: load-exercise ( n -- )
+  update-progress
+  exercise-path included ;
+
+: run-exercise ( s" exercise-name" -- )
+  find-exercise dup 0= if
+    drop ." Exercise not found: " type cr exit
+  then
+  load-exercise
+  show-progress ;
+
+: parse-args ( -- )
+  argc @ 1 > if
+    1 arg s" run" compare 0= if
+      argc @ 2 > if
+        2 arg run-exercise
+      else
+        ." Missing exercise name" cr
+      then
+    else
+    1 arg s" list" compare 0= if
+      list-exercises bye
+    else
+      ." Unknown command: " 1 arg type cr
+    then then
+  else
+    ." Usage: forthlings <command> [args]" cr
+  then bye ;
+
+: main
+  0 10 \ completed-count total-exercises
+  welcome-msg
+  parse-args ;
+
+\ Call main on startup
+main
