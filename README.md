@@ -49,13 +49,6 @@ cd forthlings
 ```
 
 ## Exercises Overview
-Exercises are organized by topic:
-1. Basics
-2. Control Flow
-3. Functions
-4. Data Structures
-5. Compiler
-
 Each exercise includes:
 - Problem statement
 - Reference to the Gforth manual
