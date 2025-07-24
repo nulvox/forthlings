@@ -2,7 +2,7 @@
 
 # Forthlings - Interactive GNU Forth (Gforth) Learning Platform
 
-![Forthlings Logo](https://via.placeholder.com/150) <!-- Placeholder for actual logo -->
+![Forthlings Logo](https://github.com/nulvox/forthlings/forthlings.png?raw=true)
 
 ## Prerequisites
 
