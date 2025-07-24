@@ -42,10 +42,10 @@ cd forthlings
 3. Run the exercises:
 ```bash
 # List available exercises
-gforth forthlings list
+./forthlings list
 
 # Run a specific exercise
-gforth forthlings run hello-world
+./forthlings run hello-world
 ```
 
 ## Exercises Overview
